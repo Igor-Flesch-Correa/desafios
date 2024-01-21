@@ -10,12 +10,14 @@ docker exec -it compassionate_antonelli php /var/www/html/desafio1/index.php
    */
   require_once __DIR__.'/pedeDimensao.php';
   require_once __DIR__.'/testaSeMultiplica.php';
+  require_once __DIR__.'/pedeNumeros.php';
+  require_once __DIR__.'/mostraMatriz.php';
 
 
 //pega dimensão primeira matriz
 $pede = "Escreva as dimensoens da primeira matriz a ser multiplicada no formato 1x1:";
 $dim_A = pedeDimensao($pede);
-var_dump ($dim_A);
+
 
 //pega dimensão segunda matriz
 $pede = "Escreva as dimensoens da segunda matriz a ser multiplicada no formato 1x1:";
@@ -29,9 +31,14 @@ while(!testaSeMultiplica($dim_A["coluna"],$dim_B["linha"]))
 
   $dim_B = pedeDimensao($pede);
 }
-print_r ($dim_B);//teste
 
+//inserir dados na matriz, mostrar grade for,função pega,função mostra fim, loop
+$matrizA = pedeNumeros($dim_A,"primeira");
+$matrizB = pedeNumeros($dim_B,"segunda");
 
-//funcao testar se numcolunasA == numlinhasB,  se nao pedeDimensao de novo
-echo "\nteste fim\n\n";
+echo "\n------------------------------------------------------\n";
+mostraMatriz($matrizA);
+echo "\n------------------------------------------------------\n";
+mostraMatriz($matrizB);
+
 ?>
