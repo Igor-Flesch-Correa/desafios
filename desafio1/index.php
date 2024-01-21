@@ -12,6 +12,7 @@ docker exec -it compassionate_antonelli php /var/www/html/desafio1/index.php
   require_once __DIR__.'/testaSeMultiplica.php';
   require_once __DIR__.'/pedeNumeros.php';
   require_once __DIR__.'/mostraMatriz.php';
+  require_once __DIR__.'/multiplicaMatriz.php';
 
 
 //pega dimensão primeira matriz
@@ -41,4 +42,9 @@ mostraMatriz($matrizA);
 echo "\n------------------------------------------------------\n";
 mostraMatriz($matrizB);
 
+//calcula, só funciona pq checa se o numero de colunasA é igual a numero de linhasB na entrada
+$resultado = multiplicaMatriz($matrizA,$matrizB);
+echo "\n\n Resultado:\n";
+mostraMatriz($resultado);
+echo "\n\n";
 ?>

@@ -15,13 +15,12 @@ function pedeNumeros($dimensao,$nom_matriz)
  echo "\nteste entrada pedeNumero linhas:{$l} colunas:{$c}\n";//teste
  
 
-            $matriz = array();// inicializa matriz e enche com zero
+            $matriz = array();// inicializa matriz, enche com zero e mostra
 
-            for ($i = 0; $i < $l; $i++) {
-                $matriz[$i] = array_fill(0, $c, 0);
-            } echo "\n teste inicizlização matriz zero:\n\n"; mostraMatriz($matriz); //teste
+            $matriz = array_fill(0, $l, array_fill(0, $c, 0));
+            echo "\n teste inicizlização matriz zero:\n\n"; mostraMatriz($matriz); //teste
 
-
+    //enche a matriz com a entrada do usuario e mostra em loop até encher
     for($i = 0; $i < $l; $i++)
     {
         for($j = 0; $j < $c; $j++)

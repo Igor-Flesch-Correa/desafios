@@ -16,7 +16,7 @@ function pedeDimensao(string $mensagem)
         // Tenta extrair os números do tam(tamanho) no fomato intxint
         if (sscanf($tam, "%dx%d", $linha, $coluna) === 2) //numero de atribuiçoes bem sucedidas
         {
-            echo "escreveu certo 👍  ";
+            echo "escreveu certo 👍  \n";
             return ['linha' => $linha, 'coluna' => $coluna];//array com os inteiros linha coluna
 
         } else {
