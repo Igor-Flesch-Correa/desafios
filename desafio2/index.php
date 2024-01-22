@@ -12,9 +12,12 @@ docker cp /home/imply/Área\ de\ Trabalho/desafios/desafio1 desafioum:/var/www/h
 docker exec -it desafioum php /var/www/html/desafio1/index.php
    */
   
+   if (php_sapi_name() === 'cli') {
+    // Código de escape ANSI para limpar o terminal
+    echo "\033[2J\033[H";
+    } 
 
-
-  $endpoint = 'https://pokeapi.co/api/v2/pokemon';
+  $endpoint = 'https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0';
 
   //iniciar
   $cURL = curl_init();
@@ -31,7 +34,7 @@ docker exec -it desafioum php /var/www/html/desafio1/index.php
   {
       echo curl_errno($cURL);
   } else {
-      print($resposta);
+      echo"\n\nrequisicao executada para : {$endpoint}\n";
   }
 
   //fechar
@@ -49,6 +52,7 @@ if ($dados === null) {
 $file_path = __DIR__ . '/resposta.json.txt';
 file_put_contents($file_path, json_encode($dados, JSON_PRETTY_PRINT));
 
-echo 'Resposta JSON salva em ' . $file_path;
+echo "\n\nResposta JSON salva em :" . $file_path;
+echo "\n\n";
 
   ?>
