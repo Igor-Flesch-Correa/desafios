@@ -88,7 +88,7 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
     $page = isset($_GET['page']) ? intval($_GET['page']) : 1; // Checa parâmetro, se não tiver, atribui 1
     $perPage = 15;
 
-    // Substitui file_get_contents por fopen e fread
+    
     $file = fopen(__DIR__ . '/resposta.json.txt', 'r');
     if ($file) {
     $savedData = fread($file, filesize(__DIR__ . '/resposta.json.txt'));
