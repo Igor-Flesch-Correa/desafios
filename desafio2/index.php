@@ -70,6 +70,26 @@ if (php_sapi_name() === 'cli') {
 //apartir daqui aparece no webserver----------------------------------------------------------------------
 
     echo "teste";
+
+    // estudar abaixo
+    <?php
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$perPage = 15;
+
+// Lê os dados salvos do arquivo .txt
+$savedData = file_get_contents(__DIR__ . '/resposta.json.txt');
+$pokemonData = json_decode($savedData, true);
+
+// Paginação
+$startIndex = ($page - 1) * $perPage;
+$pagedData = array_slice($pokemonData['results'], $startIndex, $perPage);
+
+// Retorna os dados paginados como JSON
+header('Content-Type: application/json');
+echo json_encode($pagedData, JSON_PRETTY_PRINT);
+
+//exemplo de requisiçao: curl http://localhost:8080/index.php?page=1
+
  
 
 ?>
