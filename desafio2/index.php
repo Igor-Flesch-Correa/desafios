@@ -29,7 +29,7 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
     echo "\033[2J\033[H";
     
 
-  $endpoint = 'https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0';
+  $endpoint = 'https://pokeapi.co/api/v2/pokemon?limit=150&offset=0'; //limit = quantos pokemon pegar da api
 
   //iniciar
   $cURL = curl_init();
