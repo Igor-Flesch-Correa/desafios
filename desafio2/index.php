@@ -12,10 +12,10 @@ docker cp /home/imply/Área\ de\ Trabalho/desafios/desafio1 desafioum:/var/www/h
 docker exec -it desafioum php /var/www/html/desafio1/index.php
    */
   
-   if (php_sapi_name() === 'cli') {
+if (php_sapi_name() === 'cli') {
     // Código de escape ANSI para limpar o terminal
     echo "\033[2J\033[H";
-    } 
+    
 
   $endpoint = 'https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0';
 
@@ -34,25 +34,39 @@ docker exec -it desafioum php /var/www/html/desafio1/index.php
   {
       echo curl_errno($cURL);
   } else {
-      echo"\n\nrequisicao executada para : {$endpoint}\n";
+    fwrite(STDOUT,"\n\nrequisicao executada para : {$endpoint}\n");
   }
 
   //fechar
   curl_close($cURL);
-//modificar daqui pra baixo
-// Decodifica a resposta JSON
-$dados = json_decode($resposta, true);
 
-// Verifica se a decodificação foi bem-sucedida
-if ($dados === null) {
-    die('Erro ao decodificar JSON');
-}
+    
+    // Decodifica a resposta JSON para array php
+    $dados = json_decode($resposta, true);
 
-// Salva os dados em um arquivo .txt
-$file_path = __DIR__ . '/resposta.json.txt';
-file_put_contents($file_path, json_encode($dados, JSON_PRETTY_PRINT));
+    // Verifica se a decodificação foi bem-sucedida
+    if ($dados === null) {
+        die('Erro ao decodificar JSON');
+    }
 
-echo "\n\nResposta JSON salva em :" . $file_path;
-echo "\n\n";
+    // Salva os dados em .txt
+    $file_path = __DIR__ . '/resposta.json.txt';
+    file_put_contents($file_path, json_encode($dados, JSON_PRETTY_PRINT));//JSON_PRETTY_PRINT formata .txt para ficar mais legivel
 
-  ?>
+    fwrite(STDOUT, "\n\nResposta JSON salva em :" . $file_path);
+    fwrite(STDOUT,"\n\n");
+
+ $serverAddress = '0.0.0.0:8080';
+
+  echo "Iniciando servidor web em http://{$serverAddress}\n";
+    
+  // Inicia o servidor web embutido
+  exec("php -S {$serverAddress} " . __FILE__); 
+}// essa chave marca final de tudo que 'e executado somente no terminal
+
+//aqui inicia webserver----------------------------------------------------------------------
+
+    echo "teste";
+ 
+
+?>
