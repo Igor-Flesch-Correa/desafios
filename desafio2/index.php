@@ -64,7 +64,7 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
     // Salva os dados em .txt
     $file_path = __DIR__ . '/resposta.json.txt';
 
-    //MODIFICAR PARA FOPEN
+    //MODIFICAR PARA FOPEN-----------------
     file_put_contents($file_path, json_encode($dados, JSON_PRETTY_PRINT));//JSON_PRETTY_PRINT formata .txt para ficar mais legivel
 
     fwrite(STDOUT, "\n\nResposta JSON salva em :" . $file_path);
@@ -105,7 +105,7 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
     header('Content-Type: application/json; charset=utf-8');
 
     // Retorna os dados paginados como JSON
-    echo json_encode($pagedData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    echo json_encode($pagedData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);// n~ao esta saindo formatdo
 } else {
     echo "Não foi possível abrir o arquivo.";
 }
