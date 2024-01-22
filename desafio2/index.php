@@ -1,5 +1,9 @@
 <?php
-/*      
+/*     
+
+lembretes
+
+
 abrir container com imagem teste
 casa
 docker run -dp 8080:80 -v C:\Users\ilsidonia\Desktop\estagioimply\desafios\desafio2:/var/www/html --name desafiodois php:8.3.1-apache
@@ -14,8 +18,13 @@ docker cp /home/imply/Área\ de\ Trabalho/desafios/desafio1 desafioum:/var/www/h
   
 docker exec -it desafioum php /var/www/html/desafio1/index.php
    */
+
+
+
+
+
   
-if (php_sapi_name() === 'cli') {
+if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
     // Código de escape ANSI para limpar o terminal
     echo "\033[2J\033[H";
     
@@ -67,35 +76,37 @@ if (php_sapi_name() === 'cli') {
   exec("php -S {$serverAddress} " . __FILE__); 
 }// essa chave marca final de tudo que 'e executado somente no terminal
 
+
+
+
 //apartir daqui aparece no webserver----------------------------------------------------------------------
 
     echo "teste";
 
     // estudar abaixo essa parte de mandar os dados pode ser em arquivo separado talvez, se bem q vou receber junto com a solicitaç~ao
     
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1; //checa parametro, se n~ao tiver atribui 1
-$perPage = 15;
+    $page = isset($_GET['page']) ? intval($_GET['page']) : 1; // Checa parâmetro, se não tiver, atribui 1
+    $perPage = 15;
 
-// Lê os dados salvos do arquivo .txt
-$savedData = file_get_contents(__DIR__ . '/resposta.json.txt');
-$pokemonData = json_decode($savedData, true);
+    // Substitui file_get_contents por fopen e fread
+    $file = fopen(__DIR__ . '/resposta.json.txt', 'r');
+    if ($file) {
+    $savedData = fread($file, filesize(__DIR__ . '/resposta.json.txt'));
+    fclose($file);
+    $pokemonData = json_decode($savedData, true);
 
-      //substituir file_get_contents por fopen
-        $file = fopen("arquivo.txt", "r");
-        if ($file) {
-            // Operações no arquivo podem ser realizadas aqui
-            fclose($file); // Não se esqueça de fechar o arquivo quando terminar
-        } else {
-            echo "Não foi possível abrir o arquivo.";
-        }
+    // Paginação
+    $startIndex = ($page - 1) * $perPage;
+    $pagedData = array_slice($pokemonData['results'], $startIndex, $perPage);
 
-// Paginação
-$startIndex = ($page - 1) * $perPage;
-$pagedData = array_slice($pokemonData['results'], $startIndex, $perPage);
+    // Define o cabeçalho para indicar que o conteúdo é JSON
+    header('Content-Type: application/json; charset=utf-8');
 
-// Retorna os dados paginados como JSON
-header('Content-Type: application/json');
-echo json_encode($pagedData, JSON_PRETTY_PRINT);
+    // Retorna os dados paginados como JSON
+    echo json_encode($pagedData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+} else {
+    echo "Não foi possível abrir o arquivo.";
+}
 
 //exemplo de requisiçao: curl http://localhost:8080/index.php?page=1
 
