@@ -83,7 +83,7 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
 
 //apartir daqui aparece no webserver----------------------------------------------------------------------
 
-    echo "teste";
+    
 
     // estudar abaixo essa parte de mandar os dados pode ser em arquivo separado talvez, se bem q vou receber junto com a solicitaç~ao
     
@@ -105,7 +105,7 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
     header('Content-Type: application/json; charset=utf-8');
 
     // Retorna os dados paginados como JSON
-    echo json_encode($pagedData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);// n~ao esta saindo formatdo
+    echo json_encode($pagedData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 } else {
     echo "Não foi possível abrir o arquivo.";
 }
