@@ -71,14 +71,23 @@ if (php_sapi_name() === 'cli') {
 
     echo "teste";
 
-    // estudar abaixo
-    <?php
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+    // estudar abaixo essa parte de mandar os dados pode ser em arquivo separado talvez, se bem q vou receber junto com a solicitaç~ao
+    
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1; //checa parametro, se n~ao tiver atribui 1
 $perPage = 15;
 
 // Lê os dados salvos do arquivo .txt
 $savedData = file_get_contents(__DIR__ . '/resposta.json.txt');
 $pokemonData = json_decode($savedData, true);
+
+      //substituir file_get_contents por fopen
+        $file = fopen("arquivo.txt", "r");
+        if ($file) {
+            // Operações no arquivo podem ser realizadas aqui
+            fclose($file); // Não se esqueça de fechar o arquivo quando terminar
+        } else {
+            echo "Não foi possível abrir o arquivo.";
+        }
 
 // Paginação
 $startIndex = ($page - 1) * $perPage;
