@@ -3,8 +3,11 @@
 abrir container com imagem teste
 casa
 docker run -dp 8080:80 -v C:\Users\ilsidonia\Desktop\estagioimply\desafios\desafio2:/var/www/html --name desafiodois php:8.3.1-apache
+
 imply
 docker run -dp 8080:80 -v /home/imply/Área\ de\ Trabalho/desafios/desafio2:/var/www/html --name desafiodois php:8.3.2-apache
+//usar esse, abri ws no cod
+docker run -d -v /home/imply/Área\ de\ Trabalho/desafios/desafio2:/var/www/html --name desafiodois php:8.3.2-apache
 
 
 docker cp /home/imply/Área\ de\ Trabalho/desafios/desafio1 desafioum:/var/www/html/
@@ -64,7 +67,7 @@ if (php_sapi_name() === 'cli') {
   exec("php -S {$serverAddress} " . __FILE__); 
 }// essa chave marca final de tudo que 'e executado somente no terminal
 
-//aqui inicia webserver----------------------------------------------------------------------
+//apartir daqui aparece no webserver----------------------------------------------------------------------
 
     echo "teste";
  
