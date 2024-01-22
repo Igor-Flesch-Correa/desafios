@@ -63,6 +63,8 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
 
     // Salva os dados em .txt
     $file_path = __DIR__ . '/resposta.json.txt';
+
+    //MODIFICAR PARA FOPEN
     file_put_contents($file_path, json_encode($dados, JSON_PRETTY_PRINT));//JSON_PRETTY_PRINT formata .txt para ficar mais legivel
 
     fwrite(STDOUT, "\n\nResposta JSON salva em :" . $file_path);
