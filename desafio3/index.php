@@ -109,13 +109,19 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
                 'nome' => $base['stat']['name'],
                 'valor' => $base['base_stat']
             );
+        
+        $objeto[]=array(
+        'pokemon' => $nomePokemon,
+        'stats' => $stats
+        );
+
         }//talvez iniciar o webserver no inicio para j'a salvar o nome e requisitar.
 
   
           // Define o cabeçalho para indicar para o navegador que o conteúdo é texto
           header('Content-Type: application/json; charset=utf-8');
 
-          echo json_encode($stats, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);//formata e mantem caracteres especiais de boa
+          echo json_encode($objeto, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);//formata e mantem caracteres especiais de boa
 
             
       } else {
