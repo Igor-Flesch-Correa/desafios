@@ -25,11 +25,9 @@ docker exec -it desafioum php /var/www/html/desafio1/index.php
 
   
 if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
-    // Código de escape ANSI para limpar o terminal
-    echo "\033[2J\033[H";
-    
+     
 
-  $endpoint = 'https://pokeapi.co/api/v2/pokemon?limit=5&offset=0'; //limit = quantos pokemon pegar da api
+  $endpoint = 'https://pokeapi.co/api/v2/pokemon?limit=150&offset=0'; //limit = quantos pokemon pegar da api
 
   //iniciar
   $cURL = curl_init();
@@ -56,17 +54,15 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
     // Decodifica a resposta JSON para array php    inicia salvar no arquivo---
     $dados = json_decode($resposta, true);
 
-    //remove count, next, previous do array
     
-      unset($dados["count"]);
-      unset($dados["next"]);
-      unset($dados["previous"]);
-    
-    //remove url e deixa só o nome
-    foreach ($dados['results'] as &$pokemonn) {
-      unset($pokemonn['url']);
+    //deixa só os nomes
+    foreach ($dados['results'] as $pokemonn) 
+    {
+    // Adiciona diretamente o nome ao novo array
+    $novoArrayNomes[] = $pokemonn['name'];
     }
-    unset($pokemonn);  // Limpar a referência após o loop
+    $dados = $novoArrayNomes;
+    
   
     
     //echo $test;
@@ -121,7 +117,7 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
 
     // Paginação
     $startIndex = ($page - 1) * $perPage;
-    $pagedData = array_slice($pokemonData['results'], $startIndex, $perPage);
+    $pagedData = array_slice($pokemonData, $startIndex, $perPage);
 
     // Define o cabeçalho para indicar que o conteúdo é JSON
     header('Content-Type: application/json; charset=utf-8');
