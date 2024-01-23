@@ -117,13 +117,13 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
 
     // Paginação
     $inicPagina = ($pagAtual - 1) * $porPagina;
-    $pagedData = array_slice($dadosArquivoJson, $inicPagina, $porPagina);
+    $dadosCortados = array_slice($dadosArquivoJson, $inicPagina, $porPagina);//corta pedaço dos dados do arquivo que viraram Json de volta
 
     // Define o cabeçalho para indicar que o conteúdo é JSON
     header('Content-Type: application/json; charset=utf-8');
 
     // Retorna os dados paginados como JSON
-    echo json_encode($pagedData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    echo json_encode($dadosCortados, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);//formata e mantem caracteres especiais de boa
 } else {
     echo "Não foi possível abrir o arquivo.";
 }
