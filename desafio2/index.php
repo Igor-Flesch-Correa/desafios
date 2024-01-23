@@ -34,7 +34,7 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
     // define onde vai salvar os dados em .txt tem q ser feito antes para checar se ja existe antes de solicitar
     $file_path = __DIR__ . '/resposta.json.txt';
 
-    $file_path = __DIR__ . '/resposta.json.txt';
+   
 
     if (!file_exists($file_path)) {//teste se j'a tem o arquivo, o ideal seria fazer uma logica que substitui uma vez por dia ou algo assim se fosse em producao
   //iniciar
