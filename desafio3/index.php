@@ -4,11 +4,11 @@
 
 if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
      
-
-    $endpoint = 'https://pokeapi.co/api/v2/pokemon?limit=150&offset=0'; //limit = quantos pokemon pegar da api
+    $pokemon = "vaporeon";
+    $endpoint = "https://pokeapi.co/api/v2/pokemon/{$pokemon}"; //limit = quantos pokemon pegar da api
   
       // define onde vai salvar os dados em .txt tem q ser feito antes para checar se ja existe antes de solicitar
-      $file_path = __DIR__ . '/resposta.json.txt';
+      $file_path = __DIR__ . "/{$pokemon}.json.txt";
   
      
   
@@ -38,7 +38,7 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
       // Decodifica a resposta JSON para array php    inicia salvar no arquivo---
       $dados = json_decode($resposta, true);
   
-      
+      /* PROVAVELMENTE N~AO VOU USAR, APAGAR DEPOIS
       //deixa só os nomes
       foreach ($dados['results'] as $pokemonn) 
       {
@@ -46,7 +46,7 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
       $novoArrayNomes[] = $pokemonn['name'];
       }
       $dados = $novoArrayNomes;
-      
+      */
     
       
       //echo $test;
@@ -60,8 +60,8 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
   
       
   
-      //MODIFICAR PARA FOPEN-----------------
-      $file = fopen($file_path, 'w');
+      //inicia salva arquivo
+      $file = fopen($file_path, 'w');//cria arquivo e se existir apaga o que tem dentro
   
       // Escreve os dados no arquivo usando fwrite
       fwrite($file, json_encode($dados, JSON_PRETTY_PRINT));
