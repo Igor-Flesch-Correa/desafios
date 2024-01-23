@@ -5,10 +5,10 @@
 if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
      
     $pokemon = "vaporeon";
-    $endpoint = "https://pokeapi.co/api/v2/pokemon/{$pokemon}"; //limit = quantos pokemon pegar da api
+    $endpoint = "https://pokeapi.co/api/v2/pokemon/$pokemon"; //limit = quantos pokemon pegar da api
   
       // define onde vai salvar os dados em .txt tem q ser feito antes para checar se ja existe antes de solicitar
-      $file_path = __DIR__ . "/{$pokemon}.json.txt";
+      $file_path = __DIR__ . "/$pokemon.txt";
   
      
   
@@ -28,7 +28,7 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
     {
         echo curl_errno($cURL);
     } else {
-      fwrite(STDOUT,"\n\nrequisicao executada para : {$endpoint}\n");
+      fwrite(STDOUT,"\n\nrequisicao executada para : $endpoint\n");
     }
   
     //fechar
@@ -61,24 +61,24 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
       
   
       //inicia salva arquivo
-      $file = fopen($file_path, 'w');//cria arquivo e se existir apaga o que tem dentro
+      $file = fopen($file_path, 'w');//write, cria arquivo e se existir apaga o que tem dentro
   
       // Escreve os dados no arquivo usando fwrite
       fwrite($file, json_encode($dados, JSON_PRETTY_PRINT));
       // Fecha o arquivo após a escrita
       fclose($file);
       
-      echo "\n\nResposta JSON salva em : {$file_path}";   //termina salvar no arquivo---
+      echo "\n\nResposta JSON salva em : $file_path";   //termina salvar no arquivo---
       echo"\n\n";
   
-    }//chave do if que checa se o arquivo j'a existe
+    }//chave do if que checa se o arquivo j'a existe para apenas chamar uma vez
   
    $serverAddress = '0.0.0.0:8080';
   
-    echo "Iniciando servidor web em http://{$serverAddress}\n";
+    echo "Iniciando servidor web em http://$serverAddress\n";
       
     // Inicia o servidor web embutido
-    exec("php -S {$serverAddress} " . __FILE__); //comando shell(terminal)
+    exec("php -S $serverAddress " . __FILE__); //comando shell(terminal)
   }// essa chave marca final de tudo que 'e executado somente no terminal
   
   
@@ -86,34 +86,41 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
   
   //apartir daqui aparece no webserver----------------------------------------------------------------------
   
-      
+    
   
-      // estudar abaixo essa parte de mandar os dados pode ser em arquivo separado talvez, se bem q vou receber junto com a solicitaç~ao
-      
-      $pagAtual = isset($_GET['page']) ? intval($_GET['page']) : 1; // Checa parâmetro foi passado(isset), transforma em int, se não , atribui 1,
-      $porPagina = 15;
+  $nomePokemon = isset($_SERVER['REQUEST_URI']) ? ltrim($_SERVER['REQUEST_URI'], '/') : '';
+   
+  if (!empty($nomePokemon)) {
+      $file_path = __DIR__ . '/' . $nomePokemon . '.txt';//at'e aqui ok
   
-      
-      $file = fopen(__DIR__ . '/resposta.json.txt', 'r');
-      if ($file) {
-      $arquivo = fread($file, filesize(__DIR__ . '/resposta.json.txt'));
-      fclose($file);
-      $dadosArquivoJson = json_decode($arquivo, true);
+      if (file_exists($file_path)) {
+
+        $file = fopen($file_path, 'r');//abre
+        $conteudoArquivo = fread($file, filesize($file_path));
+        fclose($file);
+
+        // 
+        $dadosJson = json_decode($conteudoArquivo, true);
+
+        $stats = $dadosJson['stats'];
+
   
-      // Paginação
-      $inicPagina = ($pagAtual - 1) * $porPagina;
-      $dadosCortados = array_slice($dadosArquivoJson, $inicPagina, $porPagina);//corta pedaço dos dados do arquivo que viraram Json de volta
-  
-      // Define o cabeçalho para indicar para navegador que o conteúdo é JSON
-      header('Content-Type: application/json; charset=utf-8');
-  
-      // Retorna JSON
-      echo json_encode($dadosCortados, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);//formata e mantem caracteres especiais de boa
+          // Define o cabeçalho para indicar para o navegador que o conteúdo é texto
+          header('Content-Type: application/json; charset=utf-8');
+
+          echo json_encode($stats, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);//formata e mantem caracteres especiais de boa
+
+            
+      } else {
+          echo "Arquivo não encontrado para o Pokémon: $nomePokemon.";
+      }
   } else {
-      echo "Não foi possível abrir o arquivo.";
+      echo "Nome do Pokémon não foi fornecido na URL.";
   }
+/* 
+  */
   
-  //exemplo de requisiçao: curl http://localhost:8080/index.php?page=1
+  //exemplo de requisiçao: curl http://localhost:8080/vaporeon
   
    
   
