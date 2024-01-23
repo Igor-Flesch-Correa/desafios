@@ -93,7 +93,7 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
   echo "Iniciando servidor web em http://{$serverAddress}\n";
     
   // Inicia o servidor web embutido
-  exec("php -S {$serverAddress} " . __FILE__); 
+  exec("php -S {$serverAddress} " . __FILE__); //comando shell(terminal)
 }// essa chave marca final de tudo que 'e executado somente no terminal
 
 
@@ -105,19 +105,19 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
 
     // estudar abaixo essa parte de mandar os dados pode ser em arquivo separado talvez, se bem q vou receber junto com a solicitaç~ao
     
-    $page = isset($_GET['page']) ? intval($_GET['page']) : 1; // Checa parâmetro, se não tiver, atribui 1
-    $perPage = 15;
+    $pagAtual = isset($_GET['page']) ? intval($_GET['page']) : 1; // Checa parâmetro foi passado(isset), transforma em int, se não , atribui 1,
+    $porPagina = 15;
 
     
     $file = fopen(__DIR__ . '/resposta.json.txt', 'r');
     if ($file) {
-    $savedData = fread($file, filesize(__DIR__ . '/resposta.json.txt'));
+    $arquivo = fread($file, filesize(__DIR__ . '/resposta.json.txt'));
     fclose($file);
-    $pokemonData = json_decode($savedData, true);
+    $dadosArquivoJson = json_decode($arquivo, true);
 
     // Paginação
-    $startIndex = ($page - 1) * $perPage;
-    $pagedData = array_slice($pokemonData, $startIndex, $perPage);
+    $inicPagina = ($pagAtual - 1) * $porPagina;
+    $pagedData = array_slice($dadosArquivoJson, $inicPagina, $porPagina);
 
     // Define o cabeçalho para indicar que o conteúdo é JSON
     header('Content-Type: application/json; charset=utf-8');
