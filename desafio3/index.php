@@ -1,6 +1,7 @@
 <?php
 //colar no cmd
 //docker run -d -v /home/imply/Área\ de\ Trabalho/desafios/desafio3:/var/www/html --name desafiotres php:8.3.2-apache
+//docker run -d -v C:\Users\ilsidonia\Desktop\estagioimply\desafios\desafio3:/var/www/html --name desafiotres php:8.3.2-apache
 
 if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
      
@@ -109,13 +110,13 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
                 'nome' => $base['stat']['name'],
                 'valor' => $base['base_stat']
             );
-        
+        }
         $objeto[]=array(
         'pokemon' => $nomePokemon,
         'stats' => $stats
         );
 
-        }//talvez iniciar o webserver no inicio para j'a salvar o nome e requisitar.
+        //talvez iniciar o webserver no inicio para j'a salvar o nome e requisitar.
 
   
           // Define o cabeçalho para indicar para o navegador que o conteúdo é texto
