@@ -29,6 +29,12 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
 
   $endpoint = 'https://pokeapi.co/api/v2/pokemon?limit=150&offset=0'; //limit = quantos pokemon pegar da api
 
+    // define onde vai salvar os dados em .txt tem q ser feito antes para checar se ja existe antes de solicitar
+    $file_path = __DIR__ . '/resposta.json.txt';
+
+    $file_path = __DIR__ . '/resposta.json.txt';
+
+    if (!file_exists($file_path)) {
   //iniciar
   $cURL = curl_init();
 
@@ -74,8 +80,7 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
         die('Erro ao decodificar JSON');//die mata a execução do script
     }
 
-    // define onde vai salvar os dados em .txt
-    $file_path = __DIR__ . '/resposta.json.txt';
+    
 
     //MODIFICAR PARA FOPEN-----------------
     $file = fopen($file_path, 'w');
@@ -87,6 +92,8 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
     
     echo "\n\nResposta JSON salva em : {$file_path}";   //termina salvar no arquivo---
     echo"\n\n";
+
+  }//chave do if que checa se o arquivo j'a existe
 
  $serverAddress = '0.0.0.0:8080';
 
