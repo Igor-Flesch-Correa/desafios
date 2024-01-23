@@ -6,7 +6,7 @@ lembretes
 
 abrir container com imagem teste
 casa
-docker run -dp 8080:80 -v C:\Users\ilsidonia\Desktop\estagioimply\desafios\desafio2:/var/www/html --name desafiodois php:8.3.1-apache
+docker run -d -v C:\Users\ilsidonia\Desktop\estagioimply\desafios\desafio2:/var/www/html --name desafiodois php:8.3.2-apache
 
 imply
 docker run -dp 8080:80 -v /home/imply/Área\ de\ Trabalho/desafios/desafio2:/var/www/html --name desafiodois php:8.3.2-apache
@@ -29,7 +29,7 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
     echo "\033[2J\033[H";
     
 
-  $endpoint = 'https://pokeapi.co/api/v2/pokemon?limit=150&offset=0'; //limit = quantos pokemon pegar da api
+  $endpoint = 'https://pokeapi.co/api/v2/pokemon?limit=5&offset=0'; //limit = quantos pokemon pegar da api
 
   //iniciar
   $cURL = curl_init();
@@ -38,7 +38,7 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
   curl_setopt($cURL, CURLOPT_URL, $endpoint);
   //diz q quero capturar resultado
   curl_setopt($cURL, CURLOPT_RETURNTRANSFER, true);
-  //executa requisição e armazena resposta
+  //executa requisição e armazena resposta JSON
   $resposta = curl_exec($cURL);
 
   //se ocorrer erro
@@ -53,22 +53,44 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
   curl_close($cURL);
 
     
-    // Decodifica a resposta JSON para array php
+    // Decodifica a resposta JSON para array php    inicia salvar no arquivo---
     $dados = json_decode($resposta, true);
+
+    //remove count, next, previous do array
+    
+      unset($dados["count"]);
+      unset($dados["next"]);
+      unset($dados["previous"]);
+    
+    //remove url e deixa só o nome
+    foreach ($dados['results'] as &$pokemonn) {
+      unset($pokemonn['url']);
+    }
+    unset($pokemonn);  // Limpar a referência após o loop
+  
+    
+    //echo $test;
+    var_dump($dados);
+
 
     // Verifica se a decodificação foi bem-sucedida
     if ($dados === null) {
-        die('Erro ao decodificar JSON');
+        die('Erro ao decodificar JSON');//die mata a execução do script
     }
 
-    // Salva os dados em .txt
+    // define onde vai salvar os dados em .txt
     $file_path = __DIR__ . '/resposta.json.txt';
 
     //MODIFICAR PARA FOPEN-----------------
-    file_put_contents($file_path, json_encode($dados, JSON_PRETTY_PRINT));//JSON_PRETTY_PRINT formata .txt para ficar mais legivel
+    $file = fopen($file_path, 'w');
 
-    fwrite(STDOUT, "\n\nResposta JSON salva em :" . $file_path);
-    fwrite(STDOUT,"\n\n");
+    // Escreve os dados no arquivo usando fwrite
+    fwrite($file, json_encode($dados, JSON_PRETTY_PRINT));
+    // Fecha o arquivo após a escrita
+    fclose($file);
+    
+    echo "\n\nResposta JSON salva em : {$file_path}";   //termina salvar no arquivo---
+    echo"\n\n";
 
  $serverAddress = '0.0.0.0:8080';
 
