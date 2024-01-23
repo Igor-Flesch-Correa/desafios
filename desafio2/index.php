@@ -10,8 +10,10 @@ docker run -d -v C:\Users\ilsidonia\Desktop\estagioimply\desafios\desafio2:/var/
 
 imply
 docker run -dp 8080:80 -v /home/imply/Área\ de\ Trabalho/desafios/desafio2:/var/www/html --name desafiodois php:8.3.2-apache
-//usar esse, abri ws no cod
+
+//usar esse, abri ws no cod, tentar fazer executar no cod em vez de ter q escrever no terminal.
 docker run -d -v /home/imply/Área\ de\ Trabalho/desafios/desafio2:/var/www/html --name desafiodois php:8.3.2-apache
+
 
 
 docker cp /home/imply/Área\ de\ Trabalho/desafios/desafio1 desafioum:/var/www/html/
@@ -34,7 +36,7 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
 
     $file_path = __DIR__ . '/resposta.json.txt';
 
-    if (!file_exists($file_path)) {
+    if (!file_exists($file_path)) {//teste se j'a tem o arquivo, o ideal seria fazer uma logica que substitui uma vez por dia ou algo assim se fosse em producao
   //iniciar
   $cURL = curl_init();
 
