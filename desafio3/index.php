@@ -102,7 +102,14 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
         // 
         $dadosJson = json_decode($conteudoArquivo, true);
 
-        $stats = $dadosJson['stats'];
+      
+        foreach ($dadosJson['stats'] as $base) 
+        {
+            $stats[] = array(
+                'nome' => $base['stat']['name'],
+                'valor' => $base['base_stat']
+            );
+        }//talvez iniciar o webserver no inicio para j'a salvar o nome e requisitar.
 
   
           // Define o cabeçalho para indicar para o navegador que o conteúdo é texto
