@@ -3,58 +3,70 @@
 //docker run -d -v /home/imply/Área\ de\ Trabalho/desafios/desafio3:/var/www/html --name desafiotres php:8.3.2-apache
 //docker run -d -v C:\Users\ilsidonia\Desktop\estagioimply\desafios\desafio3:/var/www/html --name desafiotres php:8.3.2-apache
 
-if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
+
+$serverAddress = '0.0.0.0:8080';
+ 
+  // Inicia o servidor web embutido
+  exec("php -S $serverAddress " . __FILE__); //comando shell(terminal)
+
+  $nomePokemon = isset($_SERVER['REQUEST_URI']) ? ltrim($_SERVER['REQUEST_URI'], '/') : '';
+  // exemplo: $nomePokemon = "vaporeon";
+
+  $debug = false;
+
+if ($debug === true) //debug
+{ 
+echo "Iniciando servidor web em http://$serverAddress\n";
+}
+   
      
-    $pokemon = "vaporeon";
-    $endpoint = "https://pokeapi.co/api/v2/pokemon/$pokemon"; //limit = quantos pokemon pegar da api
+    
+    $endpoint = "https://pokeapi.co/api/v2/pokemon/$nomePokemon"; //limit = quantos pokemon pegar da api
   
       // define onde vai salvar os dados em .txt tem q ser feito antes para checar se ja existe antes de solicitar
-      $file_path = __DIR__ . "/$pokemon.txt";
+      $file_path = __DIR__ . "/$nomePokemon.txt";
   
      
   
-      if (!file_exists($file_path)) {//teste se j'a tem o arquivo, o ideal seria fazer uma logica que substitui uma vez por dia ou algo assim se fosse em producao
-    //iniciar
-    $cURL = curl_init();
-  
-    //seta url
-    curl_setopt($cURL, CURLOPT_URL, $endpoint);
-    //diz q quero capturar resultado
-    curl_setopt($cURL, CURLOPT_RETURNTRANSFER, true);
-    //executa requisição e armazena resposta JSON
-    $resposta = curl_exec($cURL);
-  
-    //se ocorrer erro
-    if(curl_errno($cURL))
-    {
-        echo curl_errno($cURL);
-    } else {
-      fwrite(STDOUT,"\n\nrequisicao executada para : $endpoint\n");
-    }
-  
-    //fechar
-    curl_close($cURL);
+      if (!file_exists($file_path)) //teste se j'a tem o arquivo, o ideal seria fazer uma logica que substitui uma vez por dia ou algo assim se fosse em producao
+    {//iniciar
+      $cURL = curl_init();
+    
+      //seta url
+      curl_setopt($cURL, CURLOPT_URL, $endpoint);
+      //diz q quero capturar resultado
+      curl_setopt($cURL, CURLOPT_RETURNTRANSFER, true);
+      //executa requisição e armazena resposta JSON
+      $resposta = curl_exec($cURL);
+    
+      //se ocorrer erro
+      if(curl_errno($cURL))
+      {
+          echo curl_errno($cURL);
+      } else {
+        if ($debug === true) //debug
+        { 
+        echo"\n\nrequisicao executada para : $endpoint\n";
+        }
+        
+      }
+    
+      //fechar
+      curl_close($cURL);
   
       
       // Decodifica a resposta JSON para array php    inicia salvar no arquivo---
       $dados = json_decode($resposta, true);
   
-      /* PROVAVELMENTE N~AO VOU USAR, APAGAR DEPOIS
-      //deixa só os nomes
-      foreach ($dados['results'] as $pokemonn) 
-      {
-      // Adiciona diretamente o nome ao novo array
-      $novoArrayNomes[] = $pokemonn['name'];
-      }
-      $dados = $novoArrayNomes;
-      */
-    
-      
       //echo $test;
+      if ($debug === true) //debug
+      { 
       var_dump($dados);
+      }
+      
   
   
-      // Verifica se a decodificação foi bem-sucedida
+      // Verifica se decode deu certo
       if ($dados === null) {
           die('Erro ao decodificar JSON');//die mata a execução do script
       }
@@ -69,18 +81,17 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
       // Fecha o arquivo após a escrita
       fclose($file);
       
+      if ($debug === true) //debug
+      { 
       echo "\n\nResposta JSON salva em : $file_path";   //termina salvar no arquivo---
-      echo"\n\n";
+            echo"\n\n";
+      }
+      
   
     }//chave do if que checa se o arquivo j'a existe para apenas chamar uma vez
   
-   $serverAddress = '0.0.0.0:8080';
   
-    echo "Iniciando servidor web em http://$serverAddress\n";
-      
-    // Inicia o servidor web embutido
-    exec("php -S $serverAddress " . __FILE__); //comando shell(terminal)
-  }// essa chave marca final de tudo que 'e executado somente no terminal
+ 
   
   
   
@@ -89,7 +100,7 @@ if (php_sapi_name() === 'cli') { //checa se esta rondando no CLI(terminal)
   
     
   
-  $nomePokemon = isset($_SERVER['REQUEST_URI']) ? ltrim($_SERVER['REQUEST_URI'], '/') : '';
+  
    
   if (!empty($nomePokemon)) {
       $file_path = __DIR__ . '/' . $nomePokemon . '.txt';//at'e aqui ok
