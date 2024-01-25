@@ -19,12 +19,12 @@ function pedeDimensao(string $mensagem)
             echo "escreveu certo 👍  \n";
             return ['linha' => $linha, 'coluna' => $coluna];//array com os inteiros linha coluna
 
-        } else {
+        } 
 
             echo "\nescreveu no formato errado 😠 tente de novo como por exemplo: 5x5\n\n";
             return pedeDimensao($mensagem); //lembrar de retornar chamadas recursivas
             
-        }
+        
 }
     
     /* PRIMEIRA TENTATIVA a de cima já deixa em formato inteiro
