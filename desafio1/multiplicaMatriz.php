@@ -26,5 +26,4 @@ for ($i = 0; $i < $lA; $i++) {
 return $resultado;
 
 
-return $resultado;
 }
