@@ -43,8 +43,8 @@ class EmailSender {
     }
 }
 
-// Uso da classe
+/* Uso da classe
 $emailSender = new EmailSender();
 $emailSender->sendEmail('destinatario@example.com', 'Assunto do Email', 'Corpo do e-mail em HTML', '/path/to/seuarquivo.csv');
-
+*/
 ?>
