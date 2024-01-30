@@ -25,7 +25,7 @@ class GeraNovoCSV
     }
     //rewind($ponteiro); volta o ponteiro para primeira linha
 
-    public function Gera() 
+    public function Gera() // organizar em funçoes privadas com return se precisar
     {
         $file1Data = $this->readCSV($this->file1);
         $file2Data = $this->readCSV($this->file2);
