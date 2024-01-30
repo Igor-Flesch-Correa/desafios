@@ -40,7 +40,8 @@ class GeraNovoCSV
             $id = $linha[1];
             $data = $linha[2];
 
-            if (!isset($UltimaData[$id]) || strtotime($data) > strtotime($UltimaData[$id])) {
+            if (!isset($UltimaData[$id]) || strtotime($data) > strtotime($UltimaData[$id])) 
+            {
                 $UltimaData[$id] = $data; //datas salvas com id como chave falta colocar em ordem
             } 
         }
