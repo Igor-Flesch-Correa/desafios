@@ -3,7 +3,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // Inclua o autoloader do Composer
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 class EmailSender {
     private $mailer;
