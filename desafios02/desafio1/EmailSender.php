@@ -2,9 +2,8 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'path/to/PHPMailer/src/Exception.php';
-require 'path/to/PHPMailer/src/PHPMailer.php';
-require 'path/to/PHPMailer/src/SMTP.php';
+// Inclua o autoloader do Composer
+require 'vendor/autoload.php';
 
 class EmailSender {
     private $mailer;
