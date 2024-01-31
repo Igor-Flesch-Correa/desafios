@@ -1,0 +1,10 @@
+FROM php:8.3.2-apache
+
+RUN docker-php-ext-install pdo pdo_pgsql
+
+# Configura o diretório de trabalho
+WORKDIR /var/www/html
+
+
+
+
