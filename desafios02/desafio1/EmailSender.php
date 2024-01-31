@@ -3,7 +3,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // Inclua o autoloader do Composer
-require '../vendor/autoload.php';
+require '/var/www/html/vendor/autoload.php';
 
 class EmailSender {
     private $mailer;
@@ -13,17 +13,19 @@ class EmailSender {
 
         // Configuração básica do PHPMailer
         $this->mailer->isSMTP();
-        $this->mailer->Host = 'smtp.gmail.com';
+        $this->mailer->Host = 'sandbox.smtp.mailtrap.io';
         $this->mailer->SMTPAuth = true;
-        $this->mailer->Username = 'seuemail@gmail.com'; // Seu e-mail
-        $this->mailer->Password = 'suasenha'; // Sua senha
+        $this->mailer->Username = '1c17e11ae4cf37'; // Seu e-mail
+        $this->mailer->Password = '9709b4d87f3a59'; // Sua senha
         $this->mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $this->mailer->Port = 587;
+        $this->mailer->Port = 2525;
+
+      
     }
 
     public function sendEmail($to, $subject, $body, $attachmentPath = null) {
         try {
-            $this->mailer->setFrom('seuemail@gmail.com', 'Seu Nome');
+            $this->mailer->setFrom('emailformatado@exemplo.com', 'teste');
             $this->mailer->addAddress($to);
 
             $this->mailer->isHTML(true);
@@ -43,8 +45,8 @@ class EmailSender {
     }
 }
 
-/* Uso da classe
+// Uso da classe
 $emailSender = new EmailSender();
-$emailSender->sendEmail('destinatario@example.com', 'Assunto do Email', 'Corpo do e-mail em HTML', '/path/to/seuarquivo.csv');
-*/
+$emailSender->sendEmail('icorrea@imply.com', 'Assunto teste', 'Bom dia', __DIR__ . '/novo.csv');
+
 ?>
