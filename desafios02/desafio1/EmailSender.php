@@ -45,8 +45,4 @@ class EmailSender {
     }
 }
 
-// Uso da classe
-$emailSender = new EmailSender();
-$emailSender->sendEmail('icorrea@imply.com', 'Assunto teste', 'Bom dia', __DIR__ . '/novo.csv');
 
-?>
