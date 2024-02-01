@@ -1,5 +1,9 @@
 FROM php:8.3.2-apache
 
+# Instala as dependências do PostgreSQL
+RUN apt-get update && \
+    apt-get install -y libpq-dev
+
 RUN docker-php-ext-install pdo pdo_pgsql
 
 # Configura o diretório de trabalho
