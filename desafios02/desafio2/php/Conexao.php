@@ -4,9 +4,11 @@ class Conexao {
     private static $conexao = null;
 
     
-    private function __construct() {}//impede essas coisas
+    private function __construct() {}
     private function __clone() {}
-    private function __wakeup() {}
+    public function __wakeup() {
+        throw new Exception("Não pode usar wakeup na classe Conexao");
+    }
 
     public static function conectar() {
         if (self::$conexao === null) {//::metodo de acessar funcoes ou etc(estáticas) de uma clase sem referenciar um objeto, já que não tem
@@ -27,6 +29,7 @@ class Conexao {
 
             } catch (PDOException $e) {
                 echo "Erro na conexão com o banco de dados: " . $e->getMessage();
+                exit;
             }
         }
         return self::$conexao;
