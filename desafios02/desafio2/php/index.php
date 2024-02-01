@@ -25,7 +25,7 @@ $funcionario4->cadastrar();
 
 // Alterando os nomes e aumentando os salários
 
-$funcionario1->mudaNome("João Leiteiro"); // Altera o nome
+$funcionario1->mudaNome("nome novo Alvin"); // Altera o nome
 $funcionario1->aumentarSalario(10); // Aumenta o salário em 10%
 
 
@@ -35,7 +35,7 @@ $funcionario1->listarTodos();
 
 
 // Salvando o ID de um funcionário e realizando unset no objeto
-$idSalvo = $Funcionario1->salvaId();
+$idSalvo = $funcionario1->salvaId();
 unset($funcionario1);
 
 // Carregando os dados do funcionário com o ID salvo
