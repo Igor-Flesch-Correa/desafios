@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Conexao.php'; // Ajuste o caminho conforme necessário
+require_once 'Conexao.php';
 
 class Funcionario
 {
@@ -19,11 +19,9 @@ class Funcionario
         $this->salario = $salario;
     }
 
-    // Getters e setters aqui...
-
     public function cadastrar()
     {
-        $conexao = (new Conexao())->conectar();
+        $conexao = Conexao::conectar();
         $sql = "INSERT INTO public.funcionarios (nome, genero, idade, salario) VALUES (:nome, :genero, :idade, :salario)";
         $stmt = $conexao->prepare($sql);
         $stmt->bindValue(':nome', $this->nome);
@@ -33,11 +31,9 @@ class Funcionario
         return $stmt->execute();
     }
 
-   
-
     public function atualizar()
     {
-        $conexao = (new Conexao())->conectar();
+        $conexao = Conexao::conectar();
         $sql = "UPDATE public.funcionarios SET nome = :nome, genero = :genero, idade = :idade, salario = :salario WHERE id = :id";
         $stmt = $conexao->prepare($sql);
         $stmt->bindValue(':id', $this->id);
@@ -50,16 +46,16 @@ class Funcionario
 
     public function excluir()
     {
-        $conexao = (new Conexao())->conectar();
+        $conexao = Conexao::conectar();
         $sql = "DELETE FROM public.funcionarios WHERE id = :id";
         $stmt = $conexao->prepare($sql);
         $stmt->bindValue(':id', $this->id);
         return $stmt->execute();
     }
 
-     public function listarTodos()
+    public function listarTodos()
     {
-        $conexao = (new Conexao())->conectar();
+        $conexao = Conexao::conectar();
         $sql = "SELECT * FROM public.funcionarios";
         $stmt = $conexao->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -67,19 +63,23 @@ class Funcionario
 
     public function listarPorId($id)
     {
-        $conexao = (new Conexao())->conectar();
+        $conexao = Conexao::conectar();
         $sql = "SELECT * FROM public.funcionarios WHERE id = :id";
         $stmt = $conexao->prepare($sql);
         $stmt->bindValue(':id', $id);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    
+
+    public function mudaNome($nome)
+    {
+        $this->nome = $nome;
+        return $this;
+    }
+
     public function aumentarSalario($percentual)
     {
         $this->salario += ($this->salario * $percentual) / 100;
         $this->atualizar();
     }
 }
-
-?>

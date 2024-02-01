@@ -1,40 +1,49 @@
 <?php
-//docker-compose up no diretorio para subir os 2
-require_once "Conexao.php";
-require_once "Funcionario.php";
 
-$conexao = new Conexao();
-$funcionario = new Funcionario();
+require_once 'Conexao.php';
+require_once 'Funcionario.php';
 
-// Cadastrar funcionários
-$funcionario->cadastrar("Funcionario1", 1000, 25);
-$funcionario->cadastrar("Funcionario2", 1200, 30);
-$funcionario->cadastrar("Funcionario3", 800, 28);
-$funcionario->cadastrar("Funcionario4", 1500, 35);
+// Realizando 4 cadastros de funcionários
+$funcionario1 = new Funcionario("Alvin", "Masculino", 30, 3000.00);
+$funcionario1->cadastrar();
 
-// Alterar nomes e aumentar salários
-$funcionario->alterarNome(1, "NovoNome1");
-$funcionario->alterarNome(2, "NovoNome2");
-$funcionario->alterarNome(3, "NovoNome3");
-$funcionario->alterarNome(4, "NovoNome4");
+$funcionario2 = new Funcionario("Gyovana", "Feminino", 28, 3200.00);
+$funcionario2->cadastrar();
 
-$funcionario->aumentarSalario(1, 10);
-$funcionario->aumentarSalario(2, 5);
-$funcionario->aumentarSalario(3, 15);
-$funcionario->aumentarSalario(4, 8);
+$funcionario3 = new Funcionario("Carlinhos", "Masculino", 35, 3500.00);
+$funcionario3->cadastrar();
 
-// Listar todos os funcionários
-$funcionario->listarTodos();
+$funcionario4 = new Funcionario("Anastasia", "Feminino", 32, 3400.00);
+$funcionario4->cadastrar();
 
-// Salvar ID de um funcionário, realizar unset e carregar novamente
-$idParaExcluir = 3;
-$funcionario->excluir($idParaExcluir);
+// Alterando os nomes e aumentando os salários
 
-// Listar novamente após exclusão
-$funcionario->listarTodos();
+$funcionario1->mudaNome("João Leiteiro"); // Altera o nome
+$funcionario1->aumentarSalario(10); // Aumenta o salário em 10%
 
-// Carregar dados de um funcionário excluído
-$funcionarioExcluido = new Funcionario();
-$funcionarioExcluido->carregarPorId($idParaExcluir);
 
-?>
+// Listando todos os funcionários após as alterações
+echo "Funcionários após alterações:\n";
+$listaFuncionarios = $funcionario1->listarTodos();
+foreach ($listaFuncionarios as $func) {
+    echo "{$func['nome']}, {$func['genero']}, {$func['idade']}, {$func['salario']}\n";
+}
+
+// Salvando o ID de um funcionário e realizando unset no objeto
+$idSalvo = $funcionario1->id;
+unset($funcionario1);
+
+// Carregando os dados do funcionário com o ID salvo
+$funcionarioRecarregado = new Funcionario();
+$dadosFuncionario = $funcionarioRecarregado->listarPorId($idSalvo);
+echo "\nDados do funcionário recarregado:\n";
+echo "{$dadosFuncionario['nome']}, {$dadosFuncionario['genero']}, {$dadosFuncionario['idade']}, {$dadosFuncionario['salario']}\n";
+
+// Excluindo um funcionário e listando os restantes
+$funcionario2->excluir();
+
+echo "\nFuncionários após exclusão:\n";
+$listaFuncionariosAtualizada = $funcionario3->listarTodos();
+foreach ($listaFuncionariosAtualizada as $func) {
+    echo "{$func['nome']}, {$func['genero']}, {$func['idade']}, {$func['salario']}\n";
+}
