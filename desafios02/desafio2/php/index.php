@@ -24,18 +24,16 @@ $funcionario1->aumentarSalario(10); // Aumenta o salário em 10%
 
 // Listando todos os funcionários após as alterações
 echo "Funcionários após alterações:\n";
-$listaFuncionarios = $funcionario1->listarTodos();
-foreach ($listaFuncionarios as $func) {
-    echo "{$func['nome']}, {$func['genero']}, {$func['idade']}, {$func['salario']}\n";
-}
+$funcionario1->listarTodos();
+
 
 // Salvando o ID de um funcionário e realizando unset no objeto
-$idSalvo = $funcionario1->id;
+$idSalvo = $Funcionario1->salvaId();
 unset($funcionario1);
 
 // Carregando os dados do funcionário com o ID salvo
 $funcionarioRecarregado = new Funcionario();
-$dadosFuncionario = $funcionarioRecarregado->listarPorId($idSalvo);
+$dadosFuncionario = $funcionarioRecarregado->construirPorId($idSalvo);
 echo "\nDados do funcionário recarregado:\n";
 echo "{$dadosFuncionario['nome']}, {$dadosFuncionario['genero']}, {$dadosFuncionario['idade']}, {$dadosFuncionario['salario']}\n";
 
@@ -43,7 +41,5 @@ echo "{$dadosFuncionario['nome']}, {$dadosFuncionario['genero']}, {$dadosFuncion
 $funcionario2->excluir();
 
 echo "\nFuncionários após exclusão:\n";
-$listaFuncionariosAtualizada = $funcionario3->listarTodos();
-foreach ($listaFuncionariosAtualizada as $func) {
-    echo "{$func['nome']}, {$func['genero']}, {$func['idade']}, {$func['salario']}\n";
-}
+$funcionario3->listarTodos();
+?>

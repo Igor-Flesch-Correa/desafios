@@ -58,7 +58,11 @@ class Funcionario
         $conexao = Conexao::conectar();
         $sql = "SELECT * FROM public.funcionarios";
         $stmt = $conexao->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $listaFuncionarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($listaFuncionarios as $func) {
+            echo "{$func['nome']}, {$func['genero']}, {$func['idade']}, {$func['salario']}\n";
+        }
+        
     }
 
     public function listarPorId($id)
@@ -76,10 +80,36 @@ class Funcionario
         $this->nome = $nome;
         return $this;
     }
+    public function salvaId()
+    {
+        return $this->id;
+    }
 
     public function aumentarSalario($percentual)
     {
         $this->salario += ($this->salario * $percentual) / 100;
         $this->atualizar();
+    }
+
+    public function construirPorId($id)
+    {
+        $conexao = Conexao::conectar();
+        $sql = "SELECT * FROM public.funcionarios WHERE id = :id";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($resultado) {
+            $this->id = $resultado['id'];
+            $this->nome = $resultado['nome'];
+            $this->genero = $resultado['genero'];
+            $this->idade = $resultado['idade'];
+            $this->salario = $resultado['salario'];
+            return $resultado;
+        } else {
+            echo "Funcionário não encontrado.\n";
+            return null; // Retorna null para indicar que nenhum funcionário foi encontrado.
+        }
     }
 }
