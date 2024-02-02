@@ -2,7 +2,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Inclua o autoloader do Composer
+
 require '/var/www/html/vendor/autoload.php';
 
 class EmailSender {
@@ -11,12 +11,12 @@ class EmailSender {
     public function __construct() {
         $this->mailer = new PHPMailer(true);
 
-        // Configuração básica do PHPMailer
+        
         $this->mailer->isSMTP();
         $this->mailer->Host = 'sandbox.smtp.mailtrap.io';
         $this->mailer->SMTPAuth = true;
-        $this->mailer->Username = '1c17e11ae4cf37'; // Seu e-mail
-        $this->mailer->Password = '9709b4d87f3a59'; // Sua senha
+        $this->mailer->Username = '1c17e11ae4cf37'; 
+        $this->mailer->Password = '9709b4d87f3a59'; 
         $this->mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $this->mailer->Port = 2525;
 

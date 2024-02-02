@@ -1,10 +1,6 @@
 <?php
-//docker run -dp 8080:80 -v /home/imply/Área\ de\ Trabalho/desafios/desafios02/desafio1:/var/www/html/projeto  --name desafioum emailsender
 
-//docker run -dp 8080:80 -v C:\Users\ilsidonia\Desktop\estagioimply\desafios\desafios02/desafio1:/var/www/html/projeto --name desafioum emailsender
 
-//php projeto/index.php
-//mailtrap
 include_once 'GeraNovoCSV.php';
 include_once 'EmailSender.php';
 
