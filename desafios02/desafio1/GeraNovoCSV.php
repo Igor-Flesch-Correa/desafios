@@ -23,14 +23,14 @@ class GeraNovoCSV
         }
         return $data;
     }
-    //rewind($ponteiro); volta o ponteiro para primeira linha
+   
 
-    private function Gera() // organizar em funçoes privadas com return se precisar
+    private function Gera() 
     {
         $file1Data = $this->readCSV($this->file1);
         $file2Data = $this->readCSV($this->file2);
 
-        // Logica de filtragem. salvar todos arrais junto com id?
+        
         $IdProdutos = array_column($file1Data, 0);
 
         $Precos = array_column($file1Data, 2);
@@ -42,7 +42,7 @@ class GeraNovoCSV
 
             if (!isset($UltimaData[$id]) || strtotime($data) > strtotime($UltimaData[$id])) 
             {
-                $UltimaData[$id] = $data; //datas salvas com id como chave falta colocar em ordem
+                $UltimaData[$id] = $data; 
             } 
         }
 
@@ -68,7 +68,7 @@ class GeraNovoCSV
         fputcsv($ponteiro2, ['Id Produto','Preços','Data ultima ordem','quantidade vendida','Valor total']);//escreve
 
 
-        // pega os arrays e junta em linhas(array novo)
+        
         for ($i = 0; $i < count($IdProdutos); $i++) {
 
             
@@ -95,10 +95,10 @@ class GeraNovoCSV
 
             
 
-            // Combine o elemento atual de cada coluna em um array
+            
             $linha = [$IdProdutos[$i], $Precos[$i], $CloneUltimaData, $CloneQuantidadeSomada, $ValorTotalVendido];//colocar o resto...
             
-            fputcsv($ponteiro2, $linha);//escreve
+            fputcsv($ponteiro2, $linha);
         }
 
         fclose($ponteiro2);
