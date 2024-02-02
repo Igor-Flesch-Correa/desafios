@@ -23,14 +23,28 @@ $funcionario3->cadastrar();
 $funcionario4 = new Funcionario("Anastasia", "Feminino", 32, 3400.00);
 $funcionario4->cadastrar();
 
+echo "\nFuncionários após cadastro:\n\n";
+$funcionario1->listarTodos();
 // Alterando os nomes e aumentando os salários
 
-$funcionario1->mudaNome("nome novo Alvin"); // Altera o nome
+$funcionario1->mudaNome("Alvin Alfredo"); // Altera o nome objeto
 $funcionario1->aumentarSalario(10); // Aumenta o salário em 10%
+$funcionario1->atualizar();
 
+$funcionario2->mudaNome("Gyovana Santana"); // Altera o nome objeto
+$funcionario2->aumentarSalario(10); // Aumenta o salário em 10%
+$funcionario2->atualizar();
+
+$funcionario3->mudaNome("Carlinhos Carter"); // Altera o nome objeto
+$funcionario3->aumentarSalario(10); // Aumenta o salário em 10%
+$funcionario3->atualizar();
+
+$funcionario4->mudaNome("Anastasia Albergue"); // Altera o nome objeto
+$funcionario4->aumentarSalario(10); // Aumenta o salário em 10%
+$funcionario4->atualizar();
 
 // Listando todos os funcionários após as alterações
-echo "Funcionários após alterações:\n";
+echo "\nFuncionários após alterações:\n\n";
 $funcionario1->listarTodos();
 
 
@@ -41,12 +55,12 @@ unset($funcionario1);
 // Carregando os dados do funcionário com o ID salvo
 $funcionarioRecarregado = new Funcionario();
 $dadosFuncionario = $funcionarioRecarregado->construirPorId($idSalvo);
-echo "\nDados do funcionário recarregado:\n";
-echo "{$dadosFuncionario['nome']}, {$dadosFuncionario['genero']}, {$dadosFuncionario['idade']}, {$dadosFuncionario['salario']}\n";
+echo "\nDados do funcionário recarregado:\n\n";
+echo "{$dadosFuncionario['id']}, {$dadosFuncionario['nome']}, {$dadosFuncionario['genero']}, {$dadosFuncionario['idade']}, {$dadosFuncionario['salario']}\n";
 
 // Excluindo um funcionário e listando os restantes
-$funcionario2->excluir();
+$funcionario3->excluir();
 
-echo "\nFuncionários após exclusão:\n";
+echo "\nFuncionários após exclusão:\n\n";
 $funcionario3->listarTodos();
 ?>

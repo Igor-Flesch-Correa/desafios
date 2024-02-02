@@ -22,14 +22,19 @@ class Funcionario
     public function cadastrar()
     {
         $conexao = Conexao::conectar();
-        $sql = "INSERT INTO public.funcionarios (nome, genero, idade, salario) VALUES (:nome, :genero, :idade, :salario)";
+        $sql = "INSERT INTO public.funcionarios (nome, genero, idade, salario) VALUES (:nome, :genero, :idade, :salario) RETURNING id";
         $stmt = $conexao->prepare($sql);
         $stmt->bindValue(':nome', $this->nome);
         $stmt->bindValue(':genero', $this->genero);
         $stmt->bindValue(':idade', $this->idade);
         $stmt->bindValue(':salario', $this->salario);
-        return $stmt->execute();
+        if ($stmt->execute()) {
+            $this->id = $stmt->fetch(PDO::FETCH_COLUMN);
+            return true;
+        }
+        return false;
     }
+
 
     public function atualizar()
     {
@@ -60,7 +65,7 @@ class Funcionario
         $stmt = $conexao->query($sql);
         $listaFuncionarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($listaFuncionarios as $func) {
-            echo "{$func['nome']}, {$func['genero']}, {$func['idade']}, {$func['salario']}\n";
+            echo "{$func['id']}, {$func['nome']}, {$func['genero']}, {$func['idade']}, {$func['salario']}\n";
         }
         
     }
@@ -80,6 +85,7 @@ class Funcionario
         $this->nome = $nome;
         return $this;
     }
+
     public function salvaId()
     {
         return $this->id;
