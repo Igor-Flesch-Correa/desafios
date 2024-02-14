@@ -1,0 +1,34 @@
+# Use the official PHP image with Apache, specifying version 8.3.2
+FROM php:8.3.2-apache
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    git \
+    curl \
+    libpq-dev 
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd pdo_pgsql pgsql
+
+# Install Composer globally
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Set the working directory in the container
+WORKDIR /var/www
+
+# Enable Apache modules rewrite and headers for pretty URL's and additional configurations
+RUN a2enmod rewrite headers
+
+# Copiar arquivo de configuração personalizado do Apache para o container
+COPY ./apache.conf /etc/apache2/sites-available/apache.conf
+
+# Ativar o site personalizado e desativar o site padrão
+RUN a2ensite apache.conf && a2dissite 000-default.conf

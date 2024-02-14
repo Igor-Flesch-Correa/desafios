@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www
+    depends_on:
+      - db
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: dadoslivros
+      DB_USERNAME: usuario
+      DB_PASSWORD: senha
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: dadoslivros
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: senha
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  pgdata:
+
