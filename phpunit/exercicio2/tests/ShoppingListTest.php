@@ -11,12 +11,12 @@ class ShoppingListTest extends TestCase
         $shoppingList = new ShoppingList();
         
         $initialCount = count($shoppingList->getitens());
-        $shoppingList->addItem("Maçã");
+        $shoppingList->addItem("leite");
         $this->assertCount($initialCount + 1, $shoppingList->getitens(), "A quantidade de itens deve aumentar após adicionar um novo item.");
 
         $itens = $shoppingList->getitens();
         $lastItem = end($itens);
-        $this->assertEquals("Maçã", $lastItem, "O último item adicionado deve ser 'Maçã'.");
+        $this->assertEquals("leite", $lastItem, "O último item adicionado deve ser 'leite'.");
     }
     
     // Testa a adição de itens duplicados
@@ -24,8 +24,8 @@ class ShoppingListTest extends TestCase
     {
         $shoppingList = new ShoppingList();
 
-        $shoppingList->addItem("Maçã");
-        $shoppingList->addItem("Maçã");
+        $shoppingList->addItem("leite");
+        $shoppingList->addItem("leite");
         $this->assertCount(2, $shoppingList->getitens(), "Deve ser possível adicionar itens duplicados, totalizando 2 itens iguais.");
     }
 
@@ -33,13 +33,13 @@ class ShoppingListTest extends TestCase
     {
         $shoppingList = new ShoppingList();
 
-        $shoppingList->addItem("Maçã");
+        $shoppingList->addItem("leite");
         $shoppingList->addItem("Banana");
 
-        $shoppingList->removeItem(0); // Remove "Maçã"
+        $shoppingList->removeItem(0); // Remove "leite"
 
-        $this->assertNotContains("Maçã", $shoppingList->getitens(), "Maçã deve ser removida da lista.");
-        $this->assertContains("Banana", $shoppingList->getitens(), "Banana deve permanecer na lista após a remoção de Maçã.");
+        $this->assertNotContains("leite", $shoppingList->getitens(), "leite deve ser removida da lista.");
+        $this->assertContains("Banana", $shoppingList->getitens(), "Banana deve permanecer na lista após a remoção de leite.");
     }
 
     // Testa a remoção de um item que não existe
@@ -47,7 +47,7 @@ class ShoppingListTest extends TestCase
     {
         $shoppingList = new ShoppingList();
 
-        $shoppingList->addItem("Maçã");
+        $shoppingList->addItem("leite");
         $shoppingList->removeItem(10); // Índice que não existe
 
         $this->assertCount(1, $shoppingList->getitens(), "A lista deve continuar com o mesmo número de itens após tentativa de remover um índice inexistente.");
@@ -58,7 +58,7 @@ class ShoppingListTest extends TestCase
     {
         $shoppingList = new ShoppingList();
         
-        $shoppingList->addItem("Maçã");
+        $shoppingList->addItem("leite");
         $shoppingList->addItem("Banana");
         $shoppingList->clearitens();
         $this->assertEmpty($shoppingList->getitens(), "Todos os itens devem ser removidos da lista.");

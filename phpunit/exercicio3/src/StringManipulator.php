@@ -14,7 +14,6 @@ class StringManipulator
 
     public function countVowels($str)
     {
-        // Conta as vogais, ignorando se são maiúsculas ou minúsculas
         return preg_match_all('/[aeiouAEIOU]/', $str);
     }
 }

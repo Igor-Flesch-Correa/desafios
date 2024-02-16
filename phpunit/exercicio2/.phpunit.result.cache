@@ -1,1 +1,1 @@
-{"version":1,"defects":[],"times":{"ShoppingListTest::testAddItem":0.172,"ShoppingListTest::testAddItemDuplicates":0,"ShoppingListTest::testRemoveItem":0.054,"ShoppingListTest::testRemoveNonexistentItem":0,"ShoppingListTest::testClearitens":0.008}}
+{"version":1,"defects":[],"times":{"ShoppingListTest::testAddItem":0.002,"ShoppingListTest::testAddItemDuplicates":0,"ShoppingListTest::testRemoveItem":0,"ShoppingListTest::testRemoveNonexistentItem":0,"ShoppingListTest::testClearitens":0}}
