@@ -1,0 +1,9 @@
+composer install     para instalar as dependencias do composer.json e etc
+
+docker-compose exec web phpunit
+
+#se modificar composer.json autuloader
+composer dump-autoload
+
+#faz teste
+./vendor/bin/phpunit
