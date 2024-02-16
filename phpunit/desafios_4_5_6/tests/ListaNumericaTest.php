@@ -26,17 +26,17 @@ class ListaNumericaTest extends TestCase
     {
         $lista = new ListaNumerica();
         $lista->adicionarNumero(1);
-        $lista->adicionarNumero(2);
+        $lista->adicionarNumero(5);
         $lista->adicionarNumero(3);
 
-        $this->assertEquals(3, $lista->getMaximo());
+        $this->assertEquals(5, $lista->getMaximo());
     }
 
     public function testGetMinimo()
     {
         $lista = new ListaNumerica();
         $lista->adicionarNumero(1);
-        $lista->adicionarNumero(2);
+        $lista->adicionarNumero(5);
         $lista->adicionarNumero(3);
 
         $this->assertEquals(1, $lista->getMinimo());
@@ -45,11 +45,11 @@ class ListaNumericaTest extends TestCase
     public function testCalcularMedia()
     {
         $lista = new ListaNumerica();
-        $lista->adicionarNumero(1);
-        $lista->adicionarNumero(2);
-        $lista->adicionarNumero(3);
+        $lista->adicionarNumero(10);
+        $lista->adicionarNumero(20);
+        $lista->adicionarNumero(30);
 
-        $this->assertEquals(2, $lista->calcularMedia());
+        $this->assertEquals(20, $lista->calcularMedia());
     }
 
     public function testCalcularMediaListaVazia()
