@@ -7,8 +7,8 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     libzip-dev \
-    libpq-dev \ # Adicionado para suportar postgres
-    && docker-php-ext-install pdo pdo_pgsql pgsql # Modificado para suportar postgres
+    libpq-dev \ 
+    && docker-php-ext-install pdo pdo_pgsql pgsql
 
 
 # Instala o Composer
