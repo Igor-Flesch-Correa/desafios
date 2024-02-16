@@ -11,7 +11,7 @@ class ListaNumericaTest extends TestCase
         $lista = new ListaNumerica();
         $lista->adicionarNumero(5);
 
-        $this->assertEquals([5], $lista->numeros);
+        $this->assertEquals([5], $lista->retornaNumeros());
     }
 
     public function testAdicionarNumeroNaoNumerico()

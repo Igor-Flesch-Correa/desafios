@@ -31,4 +31,9 @@ class ListaNumerica
 
         return array_sum($this->numeros) / count($this->numeros);
     }
+
+    public function retornaNumeros()
+    {
+        return $this->numeros;
+    }
 }
