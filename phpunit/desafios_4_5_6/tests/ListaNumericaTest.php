@@ -6,56 +6,43 @@ require_once 'src/ListaNumerica.php';
 
 class ListaNumericaTest extends TestCase
 {
-    public function testAdicionarNumero()
+    public function testSomarElementos()
     {
-        $lista = new ListaNumerica();
-        $lista->adicionarNumero(5);
-
-        $this->assertEquals([5], $lista->retornaNumeros());
+        $this->assertEquals(-15, ListaNumerica::somarElementos([-1, -2, -3, -4, -5]));
+        $this->assertEquals(-10, ListaNumerica::somarElementos([5, -15]));
+        $this->assertEquals(15, ListaNumerica::somarElementos([1, 2, 3, 4, 5]));
+        $this->assertEquals(0, ListaNumerica::somarElementos([]));
     }
 
-    public function testAdicionarNumeroNaoNumerico()
+    public function testEncontrarMaiorElemento()
     {
-        $this->expectException(InvalidArgumentException::class);
-
-        $lista = new ListaNumerica();
-        $lista->adicionarNumero('não é um número');
+        $this->assertEquals(-1, ListaNumerica::encontrarMaiorElemento([-5, -4, -3, -2, -1]));
+        $this->assertEquals(5, ListaNumerica::encontrarMaiorElemento([-5, 0, 5]));
+        $this->assertEquals(5, ListaNumerica::encontrarMaiorElemento([1, 2, 3, 4, 5]));
+        $this->assertNull(ListaNumerica::encontrarMaiorElemento([]));
     }
 
-    public function testGetMaximo()
+    public function testEncontrarMenorElemento()
     {
-        $lista = new ListaNumerica();
-        $lista->adicionarNumero(1);
-        $lista->adicionarNumero(5);
-        $lista->adicionarNumero(3);
-
-        $this->assertEquals(5, $lista->getMaximo());
+        $this->assertEquals(-5, ListaNumerica::encontrarMenorElemento([-1, -2, -3, -4, -5]));
+        $this->assertEquals(-5, ListaNumerica::encontrarMenorElemento([-5, 0, 5]));
+        $this->assertEquals(1, ListaNumerica::encontrarMenorElemento([1, 2, 3, 4, 5]));
+        $this->assertNull(ListaNumerica::encontrarMenorElemento([]));
     }
 
-    public function testGetMinimo()
+    public function testOrdenarLista()
     {
-        $lista = new ListaNumerica();
-        $lista->adicionarNumero(1);
-        $lista->adicionarNumero(5);
-        $lista->adicionarNumero(3);
-
-        $this->assertEquals(1, $lista->getMinimo());
+        $this->assertEquals([-5, -4, -3, -2, -1], ListaNumerica::ordenarLista([-1, -3, -5, -2, -4]));
+        $this->assertEquals([-5, 0, 5], ListaNumerica::ordenarLista([5, -5, 0]));
+        $this->assertEquals([1, 2, 3, 4, 5], ListaNumerica::ordenarLista([5, 3, 1, 4, 2]));
+        $this->assertEquals([], ListaNumerica::ordenarLista([]));
     }
 
-    public function testCalcularMedia()
+    public function testFiltrarNumerosPares()
     {
-        $lista = new ListaNumerica();
-        $lista->adicionarNumero(10);
-        $lista->adicionarNumero(20);
-        $lista->adicionarNumero(30);
-
-        $this->assertEquals(20, $lista->calcularMedia());
-    }
-
-    public function testCalcularMediaListaVazia()
-    {
-        $lista = new ListaNumerica();
-
-        $this->assertNull($lista->calcularMedia());
+        $this->assertEquals([2, -4], ListaNumerica::filtrarNumerosPares([-1, 2, -3, -4, 5]));
+        $this->assertEquals([2, 4], ListaNumerica::filtrarNumerosPares([1, 2, 3, 4, 5]));
+        $this->assertEquals([], ListaNumerica::filtrarNumerosPares([1, 3, 5]));
     }
 }
+

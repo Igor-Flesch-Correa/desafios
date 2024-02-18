@@ -2,38 +2,41 @@
 
 class ListaNumerica
 {
-    protected $numeros = [];
-
-    public function adicionarNumero($numero)
+   
+    public static function somarElementos(array $lista)
     {
-        if (!is_numeric($numero)) {
-            throw new InvalidArgumentException("O valor deve ser numérico.");
-        }
-
-        $this->numeros[] = $numero;
+        return array_sum($lista);
     }
 
-    public function getMaximo()
+    public static function encontrarMaiorElemento(array $lista)
     {
-        return max($this->numeros);
-    }
-
-    public function getMinimo()
-    {
-        return min($this->numeros);
-    }
-
-    public function calcularMedia()
-    {
-        if (empty($this->numeros)) {
+        if (empty($lista)) {
             return null;
         }
-
-        return array_sum($this->numeros) / count($this->numeros);
+        return max($lista);
     }
 
-    public function retornaNumeros()
+    public static function encontrarMenorElemento(array $lista)
     {
-        return $this->numeros;
+        if (empty($lista)) {
+            return null;
+        }
+        return min($lista);
     }
+
+    public static function ordenarLista(array $lista)
+    {
+        sort($lista);
+        return $lista;
+    }
+
+    public static function filtrarNumerosPares(array $lista)
+    {
+        $filtrados = array_filter($lista, function ($numero) {
+            return $numero % 2 === 0;
+        });
+
+        return array_values($filtrados); // Reindexa as chaves do array
+    }
+
 }

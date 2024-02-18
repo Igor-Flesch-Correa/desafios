@@ -6,4 +6,4 @@ docker-compose exec web phpunit
 composer dump-autoload
 
 #faz teste
-./vendor/bin/phpunit
+php vendor/phpunit/phpunit/phpunit
