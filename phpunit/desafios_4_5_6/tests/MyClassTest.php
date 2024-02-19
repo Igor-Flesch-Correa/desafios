@@ -5,10 +5,25 @@ use PHPUnit\Framework\TestCase;
 require_once 'src/MyClass.php';
 
 class ExampleClass {
+    private $arg1;
+    private $arg2;
+
+    public function __construct($arg1 = null, $arg2 = null) {
+        $this->arg1 = $arg1;
+        $this->arg2 = $arg2;
+    }
+
     public function exampleMethod() {
         return "Original Value";
     }
+
+    public function methodName() {
+        // Implementação do método.
+        return "algum valor";
+    }
 }
+
+
 
 class MyClassTest extends TestCase
 {
