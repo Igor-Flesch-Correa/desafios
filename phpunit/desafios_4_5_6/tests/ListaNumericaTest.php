@@ -6,7 +6,7 @@ require_once 'src/ListaNumerica.php';
 
 class ListaNumericaTest extends TestCase
 {
-    public function testSomarElementos()
+    public function testSomarElementos()//colocar numeros ponto flutuante
     {
         $this->assertEquals(-15, ListaNumerica::somarElementos([-1, -2, -3, -4, -5]));
         $this->assertEquals(-10, ListaNumerica::somarElementos([5, -15]));
@@ -43,6 +43,7 @@ class ListaNumericaTest extends TestCase
         $this->assertEquals([2, -4], ListaNumerica::filtrarNumerosPares([-1, 2, -3, -4, 5]));
         $this->assertEquals([2, 4], ListaNumerica::filtrarNumerosPares([1, 2, 3, 4, 5]));
         $this->assertEquals([], ListaNumerica::filtrarNumerosPares([1, 3, 5]));
+        $this->assertEquals([0], ListaNumerica::filtrarNumerosPares([1, 0, 5]));
     }
 }
 
