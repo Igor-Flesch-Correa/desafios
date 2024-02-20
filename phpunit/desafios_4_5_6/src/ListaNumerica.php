@@ -36,7 +36,7 @@ class ListaNumerica
             return $numero % 2 === 0;
         });
 
-        return array_values($filtrados); // Reindexa as chaves do array
+        return array_values($filtrados); 
     }
 
 }

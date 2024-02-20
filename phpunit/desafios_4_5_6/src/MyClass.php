@@ -6,9 +6,6 @@ class MyClass
 {
     private TestCase $testCase;
 
-
-
-
     public function __construct(TestCase $testCase)
     {
         $this->testCase = $testCase;
@@ -28,21 +25,16 @@ class MyClass
             $mockBuilder->addMethods($options['methods']);
         }
 
-        
-
         if (!empty($options['autoload']) && !$options['autoload']) {
             $mockBuilder->disableAutoload();
         }
 
-        
-        
         if (!empty($options['clone']) && $options['clone'] === false) {
-            // Configura o mock para lançar uma exceção ao tentar cloná-lo, simulando a "desativação" da clonagem
             $mockBuilder->addMethods(['__clone']);
             $mock = $mockBuilder->getMock();
             $mock->method('__clone')->will($this->testCase->throwException(new \Exception("Cloning is not allowed.")));
         } else {
-            // Procede normalmente com a criação do mock sem alterar o comportamento de clonagem
+           
             $mock = $mockBuilder->getMock();
         }
 
@@ -67,10 +59,8 @@ class MyTestClass extends TestCase
 {
     public function testExample()
     {
-        // Instancia MyClass passando $this, que é uma instância de TestCase
         $myClassInstance = new MyClass($this);
         
-        // Cria um mock para uma classe de exemplo, configurando conforme necessário
         $mock = $myClassInstance->createMock(SomeClass::class, [
             'constructorArgs' => ['arg1', 'arg2'], // Argumentos do construtor, se necessário
             'methods' => ['method1', 'method2'], // Métodos adicionais para mockar
@@ -80,7 +70,6 @@ class MyTestClass extends TestCase
             'autoload' => false // Desabilita o autoload
         ]);
 
-        // Agora, você pode utilizar $mock em seus testes conforme necessário
     }
 }
 */
