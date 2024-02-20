@@ -6,6 +6,9 @@ class MyClass
 {
     private TestCase $testCase;
 
+
+
+
     public function __construct(TestCase $testCase)
     {
         $this->testCase = $testCase;
@@ -25,15 +28,23 @@ class MyClass
             $mockBuilder->addMethods($options['methods']);
         }
 
-        if (!empty($options['clone']) && !$options['clone']) {
-            $mockBuilder->disableOriginalClone();
-        }
+        
 
         if (!empty($options['autoload']) && !$options['autoload']) {
             $mockBuilder->disableAutoload();
         }
 
-        $mock = $mockBuilder->getMock();
+        
+        
+        if (!empty($options['clone']) && $options['clone'] === false) {
+            // Configura o mock para lançar uma exceção ao tentar cloná-lo, simulando a "desativação" da clonagem
+            $mockBuilder->addMethods(['__clone']);
+            $mock = $mockBuilder->getMock();
+            $mock->method('__clone')->will($this->testCase->throwException(new \Exception("Cloning is not allowed.")));
+        } else {
+            // Procede normalmente com a criação do mock sem alterar o comportamento de clonagem
+            $mock = $mockBuilder->getMock();
+        }
 
         foreach ($options['methodReturns'] ?? [] as $method => $return) {
             $mock->method($method)->willReturn($return);

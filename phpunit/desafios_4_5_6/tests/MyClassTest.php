@@ -13,10 +13,6 @@ class ExampleClass {
         $this->arg2 = $arg2;
     }
 
-    public function exampleMethod() {
-        return "Original Value";
-    }
-
     public function methodName() {
         // Implementação do método.
         return "algum valor";
@@ -57,14 +53,35 @@ class MyClassTest extends TestCase
         $this->assertInstanceOf(ExampleClass::class, $mock);
     }
 
+
+
     public function testDisableOriginalClone()
     {
         $myClass = new MyClass($this);
-        // Testando se o clone está desabilitado indiretamente, já que não há um método específico para verificar isso
-        $mock = $myClass->createMock(ExampleClass::class, ['clone' => false]);
-        $this->expectException(\BadMethodCallException::class);
-        clone $mock;
+        
+        // Parte 1: Verificar que a clonagem funciona com as configurações padrão
+        $mockWithCloningEnabled = $myClass->createMock(ExampleClass::class);
+        try {
+            $clonedObject = clone $mockWithCloningEnabled;
+            $cloneSuccess = true; // Clonagem bem-sucedida
+        } catch (Exception $e) {
+            $cloneSuccess = false; // Falha na clonagem, algo deu errado
+        }
+        $this->assertTrue($cloneSuccess, 'A clonagem deve ser bem-sucedida com as configurações padrão');
+        
+        // Parte 2: Desabilitar a clonagem e verificar se a clonagem falha
+        $mockWithCloningDisabled = $myClass->createMock(ExampleClass::class, ['clone' => false]); // Cria um novo mock com a clonagem desabilitada
+        try {
+            $clonedObject2 = clone $mockWithCloningDisabled; // Tentativa de clonar o mock com a clonagem desabilitada
+            $cloneFailed = false; // Se isso acontecer, a desabilitação da clonagem não funcionou
+        } catch (Exception $e) {
+            $cloneFailed = true; // A clonagem falhou como esperado
+        }
+        $this->assertTrue($cloneFailed, 'A clonagem deve falhar quando desabilitada');
     }
+
+ 
+
 
     public function testDisableAutoload()
     {
