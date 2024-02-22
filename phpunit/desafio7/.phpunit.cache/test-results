@@ -1,0 +1,1 @@
+{"version":1,"defects":[],"times":{"CalculadoraFinanceiraTest::testCalcularJurosSimples":0.05,"CalculadoraFinanceiraTest::testCalcularJurosCompostos":0.003,"CalculadoraFinanceiraTest::testCalcularAmortizacaoSAC":0.008,"CalculadoraFinanceiraTest::testCalcularAmortizacaoPrice":0}}
