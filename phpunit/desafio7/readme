@@ -7,3 +7,8 @@ composer dump-autoload
 
 #faz teste
 php vendor/phpunit/phpunit/phpunit
+
+./vendor/bin/phpunit --coverage-text
+
+#migração
+./vendor/bin/phpunit --migrate-configuration

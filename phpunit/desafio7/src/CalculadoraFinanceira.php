@@ -1,31 +1,67 @@
 <?php
 
-class CalculadoraFinanceira {
-    public function calcularJurosSimples($capital, $taxa, $tempo) {
-        return $capital * $taxa * $tempo;
+class CalculadoraFinanceira 
+{
+
+    private static function validarParametros(float $capital, float $tempo): void {
+        if ($capital <= 0) {
+            throw new InvalidArgumentException("O capital deve ser maior ou igual a zero.");
+        }
+        if ($tempo <= 0) {
+            throw new InvalidArgumentException("O tempo deve ser maior ou igual a zero.");
+        }
     }
 
-    public function calcularJurosCompostos($capital, $taxa, $tempo) {
-        return $capital * pow((1 + $taxa), $tempo) - $capital;
+
+    public static function calcularJurosSimples(float $capital, float $taxa, float $tempo): float {
+        self::validarParametros($capital, $tempo);
+
+        $juros = $capital * $taxa * $tempo;
+        return round($juros, 2);
     }
 
-    public function calcularAmortizacao($capital, $taxa, $tempo, $tipo) {
-        // Implementação simplificada, detalhes dependem do sistema de amortização específico
+    public static function calcularJurosCompostos(float $capital, float $taxa, float $tempo) {
+        self::validarParametros($capital, $tempo);
+
+        $juros = $capital * pow((1 + $taxa), $tempo) - $capital;
+        return round($juros, 2);
+    }
+
+    public static function calcularAmortizacao(float $capital, float $taxa, float $tempo, $tipo) {
+        self::validarParametros($capital, $tempo);
+
+        if (strtolower($tipo) !== 'sac' && strtolower($tipo) !== 'price') {
+            throw new InvalidArgumentException("O tipo deve ser 'SAC' ou 'Price'.");
+        }
+
         $resultados = [];
-        if ($tipo === 'SAC') {
-            // Lógica para SAC
+        $jurosTotal = 0;
+    
+        if (strtolower($tipo) === 'sac') {
             $amortizacao = $capital / $tempo;
             for ($i = 1; $i <= $tempo; $i++) {
                 $juros = ($capital - ($amortizacao * ($i - 1))) * $taxa;
-                $resultados[] = ['amortizacao' => $amortizacao, 'juros' => $juros];
+                $jurosTotal += $juros;
+                $mensalidade = $amortizacao + $juros;
+                $resultados['periodo' . $i] = round($mensalidade, 2);
             }
-        } elseif ($tipo === 'Price') {
-            // Lógica para Price
-            $juros = $capital * $taxa / (1 - pow((1 + $taxa), -$tempo));
+        } elseif (strtolower($tipo) === 'price') {
+            $parcela = $capital * $taxa / (1 - pow((1 + $taxa), -$tempo));
             for ($i = 1; $i <= $tempo; $i++) {
-                $resultados[] = ['parcela' => $juros];
+                $saldoDevedor = $capital;
+                for ($j = 0; $j < $i - 1; $j++) {
+                    $jurosMes = $saldoDevedor * $taxa;
+                    $saldoDevedor -= ($parcela - $jurosMes);
+                }
+                $jurosMesAtual = $saldoDevedor * $taxa;
+                $jurosTotal += $jurosMesAtual;
+                $resultados['periodo' . $i] = round($parcela, 2);
             }
         }
+    
+        $resultados['jurosTotal'] = round($jurosTotal, 2);
         return $resultados;
     }
 }
+
+
